@@ -1,1 +1,5 @@
 Name: Charlie, Goal: learn file handling 
+Name: Divya, Goal: to read file
+Name: Divya, Goal: to detect fil
+Name: divya, Goal: to read 
+Name: divya, Goal: write files

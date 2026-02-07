@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Feb  7 09:12:17 2026
+Created on Thu Feb  5 18:22:38 2026
 
 @author: divya
-"""
-
+"
 import csv
 import os
 
@@ -31,9 +30,9 @@ def process_students():
     # Create the CSV file first for demonstration
     data = [
         ['Name', 'Grade', 'Status'],
-        ['Ashe', 'A', 'Pass'],
-        ['Babeies', 'aB', 'Pass'],
-        ['saiysa', 'F', 'Fail']
+        ['Alice', 'A', 'Pass'],
+        ['Bob', 'B', 'Pass'],
+        ['Charlie', 'F', 'Fail']
     ]
     with open(filename, 'w', newline='') as file:
         writer = csv.writer(file)
