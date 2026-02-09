@@ -3,3 +3,8 @@ Name: Divya, Goal: to read file
 Name: Divya, Goal: to detect fil
 Name: divya, Goal: to read 
 Name: divya, Goal: write files
+Name: Divya, Goal: to compelete file work
+Name: Divya, Goal: to compelete file work
+Name: divya, Goal: to read file
+Name: divya, Goal: to read file
+Name: divya, Goal: to read file
