@@ -8,44 +8,70 @@ Created on Mon Feb  10 14:38:47 2026
 
 @author: divya
 """
+# STEP 1 — Import pandas 
+import pandas as pd 
+ 
+# STEP 2 — Create messy dataset (added Date + messy City + duplicate row) 
+data = { 
+    "CustomerID": [101,102,103,104,105,106,107,107,108,109], 
+    "Name": ["Amit","Sara","John",None,"Priya","David","Meena","Meena","Ali","Riya"], 
+    "Age": [25,None,30,22,None,28,35,35,None,26], 
+    "City": [" Bangalore","Mumbai ","Delhi",None,"Bangalore","Chennai","Mumbai","Mumbai","Delhi"," Bangalore "], 
+    "OrderAmount": [2500,1800,None,2200,3000,None,1500,1500,2700,None], 
+    "PaymentMethod": ["UPI","Card","Cash","Card",None,"UPI","Cash","Cash","Card","UPI"], 
+    "Date": ["2024-01-05","2024-01-10","2024-02-01","2024-02-05","2024-03-01", 
+             "2024-03-05","2024-03-10","2024-03-10","2024-04-01","2024-04-05"] 
+} 
+ 
+df = pd.DataFrame(data) 
+# STEP 3 — Inspect dataset 
+print("First rows:\n", df.head()) 
+print("\nDataset info:") 
+print(df.info()) 
+# STEP 4 — Check missing values 
+print("\nMissing values per column:") 
+print(df.isna().sum()) 
+# STEP 5 — Fill missing values (statistical approach) 
+df["Age"] = df["Age"].fillna(df["Age"].mean()) 
+df["OrderAmount"] = df["OrderAmount"].fillna(df["OrderAmount"].mean()) 
+df["City"] = df["City"].fillna(df["City"].mode()[0]) 
+df["PaymentMethod"] = df["PaymentMethod"].fillna(df["PaymentMethod"].mode()[0]) 
+df["Name"] = df["Name"].fillna("Unknown") 
+# STEP 6 — Check data types before conversion 
+print("\nData types BEFORE conversion:") 
+print(df.dtypes) 
+# STEP 7 — Convert data types 
+df["Age"] = df["Age"].astype(int) 
+df["Date"] = pd.to_datetime(df["Date"]) 
+print("\nData types AFTER conversion:") 
+print(df.dtypes) 
+
+# ------------------------------------------------- 
+# STEP 1 — Import pandas
 import pandas as pd
 
-# Load dataset
-df = pd.read_csv("customer_orders.csv")
+# STEP 2 — Create dataset with messy Location values
+data = {
+    "Location": [" New York", "new york", "NEW YORK ",
+                 "Los Angeles", " los angeles ", "LOS ANGELES"]
+}
 
-# -------------------------------
-# Goal 1: Detect & Handle Data Quality Issues
-# -------------------------------
+df = pd.DataFrame(data)
 
-# Report missing values
-print("Missing values report:\n", df.isna().sum())
+# STEP 3 — Check unique values BEFORE cleaning
+print("Unique values BEFORE cleaning:")
+print(df["Location"].unique())
 
-# Shape before cleaning
-print("Shape before cleaning:", df.shape)
+# STEP 4 — Remove leading/trailing spaces
+df["Location"] = df["Location"].str.strip()
 
-# Fill missing numeric values with median
-numeric_cols = df.select_dtypes(include=['float64','int64']).columns
-for col in numeric_cols:
-    df[col].fillna(df[col].median(), inplace=True)
+# STEP 5 — Standardize casing (Title Case)
+df["Location"] = df["Location"].str.title()
 
-# Remove duplicate rows
-df.drop_duplicates(inplace=True)
+# STEP 6 — Verify cleaning
+print("\nUnique values AFTER cleaning:")
+print(df["Location"].unique())
 
-# Shape after cleaning
-print("Shape after cleaning:", df.shape)
-
-# -------------------------------
-# Goal 2: Ensure Data is Mathematically Usable
-# -------------------------------
-
-# Check initial data types
-print("Data types before conversion:\n", df.dtypes)
-
-# Clean "Price" column: remove '$' and convert to float
-df['Price'] = df['Price'].str.replace('$','', regex=True).astype(float)
-
-# Convert "Date" column to datetime
-df['Date'] = pd.to_datetime(df['Date'])
-
-# Verify conversions
-print("Data types after conversion:\n", df.dtypes)
+# OPTIONAL — Show final dataset
+print("\nFinal cleaned dataset:")
+print(df)

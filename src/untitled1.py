@@ -5,18 +5,10 @@ Created on Mon Feb  9 11:17:59 2026
 @author: divya
 """
 
-file = open("content.txt", "w")
-file.write("Hello, myself divya.")
-file.close()
+import pandas as pd
 
-file = open("content.txt", "r")
-content = file.read()
-print(content)
-file.close()
-
-#create a data.csv file
-import csv
-
-with open("new_csv.csv"):
-    for row in reader:
-    print(row)
+data = {
+        "student name": ["shivani", "divya", "sweeetie"]
+        "Rollnumber" : [21,12,32]
+        "marks" : [98,85,56]
+        } 
