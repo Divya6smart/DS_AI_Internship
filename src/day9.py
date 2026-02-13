@@ -21,8 +21,6 @@ print(products["Laptop"])
 
 print("\nFirst two products:")
 print(products.iloc[:2])
-
-
 # -------- Grades Series --------
 grades = pd.Series([85, None, 92, 45, None, 78, 55])
 
@@ -39,8 +37,6 @@ print(filled_grades)
 
 print("\nScores greater than 60:")
 print(filled_grades[filled_grades > 60])
-
-
 # -------- Usernames Series --------
 usernames = pd.Series([' Alice ', 'bOB', ' Charlie_Data ', 'daisy'])
 

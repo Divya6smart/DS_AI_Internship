@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
+<<<<<<< HEAD
 Created on thru Feb  12 14:38:47 2026
+=======
+Created on Mon Feb  10 14:38:47 2026
+>>>>>>> 6391c11 (day9)
 
 @author: divya
 """
