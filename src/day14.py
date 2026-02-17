@@ -4,7 +4,7 @@ Created on Tue Feb 17 12:25:17 2026
 
 @author: divya
 """
-
+#task1
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
