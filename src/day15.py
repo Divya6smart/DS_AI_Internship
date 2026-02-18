@@ -33,16 +33,12 @@ import random
 # STEP 2 — Independent Event
 # Coin (Heads) AND Die (6)
 # ---------------------------------------------
-
 print("----- Independent Event -----")
-
 # Define probabilities
 P_heads = 1/2
 P_six = 1/6
-
 # Apply formula P(A ∩ B) = P(A) * P(B)
 P_independent = P_heads * P_six
-
 print("P(Heads):", P_heads)
 print("P(Roll 6):", P_six)
 print("P(Heads AND 6):", P_independent)
@@ -50,30 +46,20 @@ print("P(Heads AND 6):", P_independent)
 # STEP 3 — Dependent Event
 # Two Red marbles without replacement
 # ---------------------------------------------
-
 print("\n----- Dependent Event -----")
-
 total_marbles = 10
 red_marbles = 5
-
 # First pick
 P_first_red = red_marbles / total_marbles
-
 # Second pick (without replacement)
 P_second_red = (red_marbles - 1) / (total_marbles - 1)
-
 # Combined probability
 P_dependent = P_first_red * P_second_red
-
 print("P(First Red):", P_first_red)
 print("P(Second Red | First Red):", P_second_red)
 print("P(Two Reds):", P_dependent)
-
-
-# ---------------------------------------------
 # STEP 4 — Reflection
 # ---------------------------------------------
-
 print("\nReflection:")
 print("The denominator changed because one marble was removed.")
 print("This makes the second event dependent on the first.")
