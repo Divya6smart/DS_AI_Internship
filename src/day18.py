@@ -4,59 +4,112 @@ Created on Fri Feb 20 12:14:22 2026
 
 @author: divya
 """
-
+#task1
+# STEP 1 — Import libraries
 import sqlite3
+import pandas as pd
 
-# Connect to database
-conn = sqlite3.connect("internship.db")
+# STEP 2 — Connect to SQLite database (creates file if not exists)
+conn = sqlite3.connect("interns.db")
 cursor = conn.cursor()
 
-# -------------------------------
-# 1️⃣ FILTER: Data Science interns with stipend > 5000
-# -------------------------------
-print("Filtered Interns (Data Science & stipend > 5000):")
-
+# STEP 3 — Create interns table
 cursor.execute("""
-SELECT name, stipend
-FROM interns
-WHERE track = 'Data Science' AND stipend > 5000
+CREATE TABLE IF NOT EXISTS interns (
+    intern_id INTEGER PRIMARY KEY,
+    name TEXT,
+    track TEXT,
+    stipend INTEGER
+)
 """)
 
-filtered_rows = cursor.fetchall()
-for row in filtered_rows:
-    print(row)
+# STEP 4 — Insert sample data
+sample_data = [
+    (1, "Asha", "Data Science", 6000),
+    (2, "Ravi", "Web Development", 4000),
+    (3, "Kiran", "Data Science", 7500),
+    (4, "Meena", "Cyber Security", 5500),
+    (5, "Arjun", "Data Science", 4500),
+    (6, "Neha", "Web Development", 6500)
+]
 
+cursor.executemany("INSERT OR REPLACE INTO interns VALUES (?, ?, ?, ?)", sample_data)
+conn.commit()
 
 # -------------------------------
-# 2️⃣ AGGREGATE: Average stipend per track
+# QUERY 1 — FILTER
 # -------------------------------
-print("\nAverage Stipend Per Track:")
+query_filter = """
+SELECT * FROM interns
+WHERE track = 'Data Science'
+AND stipend > 5000;
+"""
 
-cursor.execute("""
-SELECT track, AVG(stipend)
+df_filter = pd.read_sql_query(query_filter, conn)
+print("Filtered Data (Data Science & stipend > 5000):")
+print(df_filter)
+
+# -------------------------------
+# QUERY 2 — AGGREGATE (AVG)
+# -------------------------------
+query_avg = """
+SELECT track, AVG(stipend) AS avg_stipend
 FROM interns
-GROUP BY track
-""")
+GROUP BY track;
+"""
 
-avg_rows = cursor.fetchall()
-for row in avg_rows:
-    print(row)
-
+df_avg = pd.read_sql_query(query_avg, conn)
+print("\nAverage Stipend per Track:")
+print(df_avg)
 
 # -------------------------------
-# 3️⃣ COUNT: Number of interns per track
+# QUERY 3 — COUNT
 # -------------------------------
-print("\nIntern Count Per Track:")
-
-cursor.execute("""
-SELECT track, COUNT(*)
+query_count = """
+SELECT track, COUNT(*) AS total_interns
 FROM interns
-GROUP BY track
-""")
+GROUP BY track;
+"""
 
-count_rows = cursor.fetchall()
-for row in count_rows:
-    print(row)
+df_count = pd.read_sql_query(query_count, conn)
+print("\nTotal Interns per Track:")
+print(df_count)
 
-# Close connection
+# STEP 5 — Close connection
+conn.close()
+
+#task2
+import sqlite3
+import pandas as pd
+
+# Connect
+conn = sqlite3.connect(":memory:")
+cur = conn.cursor()
+
+# Create tables
+cur.execute("CREATE TABLE interns(id INT, name TEXT, track TEXT)")
+cur.execute("CREATE TABLE mentors(id INT, mentor_name TEXT, track TEXT)")
+
+# Insert data
+cur.executemany("INSERT INTO interns VALUES (?, ?, ?)", [
+    (1, "Asha", "Data Science"),
+    (2, "Ravi", "Web Dev")
+])
+
+cur.executemany("INSERT INTO mentors VALUES (?, ?, ?)", [
+    (1, "Dr Rao", "Data Science"),
+    (2, "Mr Sharma", "Web Dev")
+])
+
+# INNER JOIN
+query = """
+SELECT i.name, i.track, m.mentor_name
+FROM interns i
+INNER JOIN mentors m
+ON i.track = m.track
+"""
+
+df = pd.read_sql_query(query, conn)
+print(df)
+
 conn.close()
